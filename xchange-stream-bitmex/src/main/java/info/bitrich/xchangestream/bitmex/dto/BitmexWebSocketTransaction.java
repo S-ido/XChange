@@ -90,6 +90,22 @@ public class BitmexWebSocketTransaction {
     return funding;
   }
 
+  public BitmexPosition[] toBitmexPositions() {
+    BitmexPosition[] positions = new BitmexPosition[this.data.size()];
+    for (int i = 0; i < this.data.size(); ++i) {
+      JsonNode jsonOrder = this.data.get(i);
+
+      try {
+        positions[i] =
+            (BitmexPosition) this.mapper.readValue(jsonOrder.toString(), BitmexPosition.class);
+      } catch (IOException var5) {
+        var5.printStackTrace();
+      }
+    }
+
+    return positions;
+  }
+
   public String getTable() {
     return table;
   }

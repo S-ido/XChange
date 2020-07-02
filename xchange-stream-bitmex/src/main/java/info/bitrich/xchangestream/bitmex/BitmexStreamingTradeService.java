@@ -1,14 +1,16 @@
 package info.bitrich.xchangestream.bitmex;
 
 import info.bitrich.xchangestream.bitmex.dto.BitmexOrder;
+import info.bitrich.xchangestream.bitmex.dto.BitmexPosition;
+import info.bitrich.xchangestream.core.StreamingTradeService;
 import io.reactivex.Observable;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import org.knowm.xchange.currency.CurrencyPair;
 import org.knowm.xchange.dto.Order;
 
-/** Created by Declan */
-public class BitmexStreamingTradeService {
+/** Created by Declan Edited by Piotr Chebdowski */
+public class BitmexStreamingTradeService implements StreamingTradeService {
 
   private final BitmexStreamingService streamingService;
 
@@ -16,7 +18,8 @@ public class BitmexStreamingTradeService {
     this.streamingService = streamingService;
   }
 
-  public Observable<Order> getOrders(CurrencyPair currencyPair, Object... args) {
+  @Override
+  public Observable<Order> getOrderChanges(CurrencyPair currencyPair, Object... args) {
     String channelName = "order";
     String instrument = currencyPair.base.toString() + currencyPair.counter.toString();
     return streamingService
@@ -28,6 +31,21 @@ public class BitmexStreamingTradeService {
                   .filter(bitmexOrder -> bitmexOrder.getSymbol().equals(instrument))
                   .filter(BitmexOrder::isNotWorkingIndicator)
                   .map(BitmexOrder::toOrder)
+                  .collect(Collectors.toList());
+            });
+  }
+
+  public Observable<BitmexPosition> getPositionChanges(CurrencyPair currencyPair, Object... args) {
+    String channelName = "position";
+    String instrument = currencyPair.base.toString() + currencyPair.counter.toString();
+
+    return streamingService
+        .subscribeBitmexChannel(channelName)
+        .flatMapIterable(
+            s -> {
+              BitmexPosition[] bitmexPositions = s.toBitmexPositions();
+              return Arrays.stream(bitmexPositions)
+                  .filter(bitmexPosition -> bitmexPosition.getSymbol().equals(instrument))
                   .collect(Collectors.toList());
             });
   }

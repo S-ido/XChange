@@ -8,6 +8,7 @@ import org.knowm.xchange.exceptions.ExchangeSecurityException;
 import org.knowm.xchange.exceptions.NotYetImplementedForExchangeException;
 import org.knowm.xchange.service.trade.TradeService;
 
+/** Modified by Piotr Chebdowski. */
 public interface StreamingTradeService {
 
   /**
@@ -31,7 +32,8 @@ public interface StreamingTradeService {
    * @return {@link Observable} that emits {@link Order} when exchange sends the update.
    */
   default Observable<Order> getOrderChanges(CurrencyPair currencyPair, Object... args) {
-    throw new NotYetImplementedForExchangeException();
+    throw new NotYetImplementedForExchangeException(
+        "Feature not yet implemented for exchange: getOrderChanges");
   }
 
   /**
@@ -55,6 +57,7 @@ public interface StreamingTradeService {
    * @return {@link Observable} that emits {@link UserTrade} when exchange sends the update.
    */
   default Observable<UserTrade> getUserTrades(CurrencyPair currencyPair, Object... args) {
-    throw new NotYetImplementedForExchangeException();
+    throw new NotYetImplementedForExchangeException(
+        "Feature not yet implemented for exchange: getUserTrades");
   }
 }

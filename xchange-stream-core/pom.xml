@@ -9,6 +9,7 @@
 
     <name>XChange Core Stream</name>
     <artifactId>xchange-stream-core</artifactId>
+    <version>5.0.8-PIOTR</version>
 
     <dependencies>
         <dependency>

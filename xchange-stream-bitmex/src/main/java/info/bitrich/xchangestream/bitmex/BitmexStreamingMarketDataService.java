@@ -16,7 +16,7 @@ import org.knowm.xchange.dto.marketdata.Trade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/** Created by Lukas Zaoralek on 13.11.17. */
+/** Created by Lukas Zaoralek on 13.11.17. Edited by Piotr Chebdowski. */
 public class BitmexStreamingMarketDataService implements StreamingMarketDataService {
   private static final Logger LOG = LoggerFactory.getLogger(BitmexStreamingMarketDataService.class);
 
@@ -48,7 +48,7 @@ public class BitmexStreamingMarketDataService implements StreamingMarketDataServ
   @Override
   public Observable<OrderBook> getOrderBook(CurrencyPair currencyPair, Object... args) {
     String instrument = getBitmexSymbol(currencyPair);
-    String channelName = String.format("orderBookL2:%s", instrument);
+    String channelName = String.format("orderBookL2_25:%s", instrument);
 
     return streamingService
         .subscribeBitmexChannel(channelName)

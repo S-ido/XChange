@@ -549,7 +549,7 @@
         </executions>
         <configuration>
           <quiet>true</quiet>
-          <skip>false</skip>
+          <skip>true</skip>
           <doclint>none</doclint>
           <source>${version.java}</source>
         </configuration>
