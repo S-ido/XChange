@@ -166,4 +166,42 @@ public class BitmexOrder extends BitmexMarketDataEvent {
   public boolean isWorkingIndicator() {
     return workingIndicator;
   }
+
+  @Override
+  public String toString() {
+    return "BitmexOrder{"
+        + "orderID='"
+        + orderID
+        + '\''
+        + ", account="
+        + account
+        + ", side='"
+        + side
+        + '\''
+        + ", price="
+        + price
+        + ", avgPx="
+        + avgPx
+        + ", ordType='"
+        + ordType
+        + '\''
+        + ", ordStatus="
+        + ordStatus
+        + ", clOrdID='"
+        + clOrdID
+        + '\''
+        + ", orderQty="
+        + orderQty
+        + ", cumQty="
+        + cumQty
+        + ", workingIndicator="
+        + workingIndicator
+        + ", timestamp='"
+        + timestamp
+        + '\''
+        + ", symbol='"
+        + symbol
+        + '\''
+        + '}';
+  }
 }

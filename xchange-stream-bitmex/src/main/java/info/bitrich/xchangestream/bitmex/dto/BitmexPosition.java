@@ -12,6 +12,7 @@ public class BitmexPosition extends BitmexMarketDataEvent {
   protected final BigDecimal currentQty;
   protected final BigDecimal markPrice;
   protected final String posState;
+  protected final boolean isOpen;
 
   @JsonCreator
   public BitmexPosition(
@@ -21,21 +22,16 @@ public class BitmexPosition extends BitmexMarketDataEvent {
       @JsonProperty("currentQty") BigDecimal currentQty,
       @JsonProperty("markPrice") BigDecimal markPrice,
       @JsonProperty("posState") String posState,
-      @JsonProperty("timestamp") String timestamp) {
+      @JsonProperty("timestamp") String timestamp,
+      @JsonProperty("isOpen") boolean isOpen) {
     super(symbol, timestamp);
     this.account = account;
     this.currency = currency;
     this.currentQty = currentQty;
     this.markPrice = markPrice;
     this.posState = posState;
+    this.isOpen = isOpen;
   }
-
-  //    public BitmexPosition(int account, String symbol, String currency, String timestamp) {
-  //        super(symbol, timestamp);
-  //
-  //        this.account = account;
-  //        this.currency = currency;
-  //    }
 
   public int getAccount() {
     return account;
@@ -57,6 +53,10 @@ public class BitmexPosition extends BitmexMarketDataEvent {
     return posState;
   }
 
+  public boolean isOpen() {
+    return isOpen;
+  }
+
   @Override
   public String toString() {
     return "BitmexPosition{"
@@ -72,6 +72,8 @@ public class BitmexPosition extends BitmexMarketDataEvent {
         + ", posState='"
         + posState
         + '\''
+        + ", isOpen="
+        + isOpen
         + ", timestamp='"
         + timestamp
         + '\''

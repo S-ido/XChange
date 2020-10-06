@@ -11,7 +11,7 @@
 
     <name>XChange Bitmex Stream</name>
     <artifactId>xchange-stream-bitmex</artifactId>
-    <version>5.0.10-PIOTR</version>
+    <version>5.0.17-PIOTR</version>
 
     <profiles>
         <profile>

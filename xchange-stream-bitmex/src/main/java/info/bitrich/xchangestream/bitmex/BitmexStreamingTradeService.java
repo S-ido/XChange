@@ -7,7 +7,6 @@ import io.reactivex.Observable;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import org.knowm.xchange.currency.CurrencyPair;
-import org.knowm.xchange.dto.Order;
 
 /** Created by Declan Edited by Piotr Chebdowski */
 public class BitmexStreamingTradeService implements StreamingTradeService {
@@ -18,19 +17,20 @@ public class BitmexStreamingTradeService implements StreamingTradeService {
     this.streamingService = streamingService;
   }
 
-  @Override
-  public Observable<Order> getOrderChanges(CurrencyPair currencyPair, Object... args) {
+  public Observable<BitmexOrder> getOrderChanges2(CurrencyPair currencyPair, Object... args) {
     String channelName = "order";
     String instrument = currencyPair.base.toString() + currencyPair.counter.toString();
+
     return streamingService
         .subscribeBitmexChannel(channelName)
         .flatMapIterable(
             s -> {
               BitmexOrder[] bitmexOrders = s.toBitmexOrders();
+
               return Arrays.stream(bitmexOrders)
                   .filter(bitmexOrder -> bitmexOrder.getSymbol().equals(instrument))
-                  .filter(BitmexOrder::isNotWorkingIndicator)
-                  .map(BitmexOrder::toOrder)
+                  //                  .filter(BitmexOrder::isNotWorkingIndicator)
+                  //                  .map(BitmexOrder::toOrder)
                   .collect(Collectors.toList());
             });
   }
@@ -44,6 +44,7 @@ public class BitmexStreamingTradeService implements StreamingTradeService {
         .flatMapIterable(
             s -> {
               BitmexPosition[] bitmexPositions = s.toBitmexPositions();
+
               return Arrays.stream(bitmexPositions)
                   .filter(bitmexPosition -> bitmexPosition.getSymbol().equals(instrument))
                   .collect(Collectors.toList());
